@@ -12,7 +12,7 @@ if (base.protocol !== 'http:' || base.hostname !== '127.0.0.1') throw new Error(
 const token = connectorSecret(DATA_ROOT);
 let projectId = process.env.STUDIO_PROJECT_ID || '';
 const server = new McpServer({ name: 'product_studio', version: '0.1.0' }, {
-  instructions: 'Local Blender product studio. First list_projects, then select_project (or create_project), then get_project. Read bundled SKILL.md with read_skill before modeling. Blender jobs are asynchronous: use get_job until completed and view_image after previews. Every edit makes a new revision; use the exact revision ID. Files are local. Do not publish shared model changes or approve a version without user authorization.',
+  instructions: 'Local Blender product studio. First list_projects, then select_project (or create_project), then get_project. Read bundled SKILL.md with read_skill. For a new product inspect references and use record_intake. If intakeStatus lists missing facts, ask the user those necessary questions together and wait; do not make a prototype first or invent evidence. Blender jobs are asynchronous: use get_job until completed and view_image after previews. Every edit makes a new revision. Do not publish shared model changes or approve a version without user authorization.',
 });
 
 async function call(name: string, args: unknown, selected = projectId): Promise<CallToolResult> {

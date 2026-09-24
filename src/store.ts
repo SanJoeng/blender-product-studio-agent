@@ -32,7 +32,7 @@ export class Store extends EventEmitter {
   }
   create(name: string, brief = '') {
     if (!name.trim()) throw new Error('请输入项目名称');
-    const p: Project = { id: id('prj'), name: name.trim().slice(0, 100), brief: brief.slice(0, 20000), notes: '', createdAt: now(), updatedAt: now(), workingRevisionId: null, approvedRevisionId: null, threadId: null, inputs: [], revisions: [], renders: [], assets: [], jobs: [], messages: [], activities: [], agentStatus: 'idle' };
+    const p: Project = { id: id('prj'), name: name.trim().slice(0, 100), brief: brief.slice(0, 20000), notes: '', intake: {}, createdAt: now(), updatedAt: now(), workingRevisionId: null, approvedRevisionId: null, threadId: null, inputs: [], revisions: [], renders: [], assets: [], jobs: [], messages: [], activities: [], agentStatus: 'idle' };
     for (const dir of ['inputs', 'revisions', 'renders', 'jobs', 'assets']) fs.mkdirSync(path.join(this.projectDir(p.id), dir), { recursive: true });
     this.save(p);
     return p;

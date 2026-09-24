@@ -14,6 +14,7 @@ import { ProductAgent } from './agent.js';
 import { dispatchTool } from './tools.js';
 import { connectorSecret, matchesConnectorSecret } from './connector-auth.js';
 import { acquireInstanceLock } from './instance-lock.js';
+import { intakeStatus } from './intake.js';
 
 export async function startServer(options: { dataRoot?: string; port?: number } = {}) {
   const releaseLock = acquireInstanceLock(options.dataRoot || DATA_ROOT);
@@ -42,7 +43,7 @@ export async function startServer(options: { dataRoot?: string; port?: number } 
   app.get('/api/projects/:id', (req, res) => {
     const p = store.get(req.params.id);
     res.setHeader('Cache-Control', 'no-store');
-    res.json({ ...p, jobs: p.jobs.slice(-40).map(({ result, ...j }) => j), directory: store.projectDir(p.id) });
+    res.json({ ...p, intakeStatus: intakeStatus(p.intake), jobs: p.jobs.slice(-40).map(({ result, ...j }) => j), directory: store.projectDir(p.id) });
   });
   app.patch('/api/projects/:id', (req, res) => {
     const data = z.object({ brief: z.string().max(20000).optional(), notes: z.string().max(30000).optional(), name: z.string().min(1).max(100).optional() }).parse(req.body);

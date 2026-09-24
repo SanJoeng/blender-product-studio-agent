@@ -7,7 +7,7 @@ const base = new URL(process.env.STUDIO_URL || 'http://127.0.0.1:4318');
 if (base.hostname !== '127.0.0.1' || base.protocol !== 'http:') throw new Error('Product Studio MCP requires a loopback server');
 const token = process.env.STUDIO_ACCESS_TOKEN;
 if (!token) throw new Error('Missing run token');
-const server = new McpServer({ name: 'product_studio', version: '0.1.0' }, { instructions: 'Manage only the current product project. Read get_project and relevant skill guidance. Blender work is queued: wait for actual completion, then inspect preview images. Use immutable versions and keep approved choices.' });
+const server = new McpServer({ name: 'product_studio', version: '0.1.0' }, { instructions: 'Manage only the current product project. Start with get_project and the bundled skill. For new products inspect references, record_intake, ask the user all missing mandatory questions together, and wait for answers before edit_scene. Never fabricate measurements or material facts to pass the gate. Blender jobs are queued: wait for actual completion, then inspect preview images. Keep immutable versions and approved choices.' });
 for (const [name, definition] of Object.entries(toolDefinitions)) {
   server.registerTool(name, { description: definition.description, inputSchema: definition.schema.shape }, async (args: unknown) => {
     try {

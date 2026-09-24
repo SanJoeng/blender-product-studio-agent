@@ -42,11 +42,11 @@ function drawProject() {
   $('#job-dot').style.display = runningJobs.length ? 'inline-block' : 'none';
   $('#send-message').disabled = busy; $('#stop-agent').hidden = !busy;
   $('#chat-status').textContent = busy ? '正在工作' : p.agentStatus === 'failed' ? '需要处理' : '就绪';
-  $('#agent-state').textContent = busy ? 'Agent 工作中' : runningJobs.length ? `${runningJobs.length} 个任务进行中` : p.workingRevisionId ? '当前版本已保存' : '等待资料';
+  $('#agent-state').textContent = busy ? 'Agent 工作中' : runningJobs.length ? `${runningJobs.length} 个任务进行中` : p.workingRevisionId ? '当前版本已保存' : p.intakeStatus?.missing?.length ? '待确认资料' : '等待资料';
   $('#agent-state').classList.toggle('busy', busy || Boolean(runningJobs.length));
   $('#chat-error').hidden = !p.agentError; $('#chat-error').textContent = p.agentError || '';
   const activity = p.activities.at(-1); $('#activity').hidden = !busy;
-  const toolNames = { get_project: '读取项目状态', read_skill: '查阅专业规范', edit_scene: '建立 / 修改 Blender 场景', render_scene: '准备渲染', get_job: '检查任务进度', view_image: '检查预览画面', save_notes: '记录项目选择', read_file: '读取资料', publish_asset: '发布主资产', select_revision: '切换版本' };
+  const toolNames = { get_project: '读取项目状态', record_intake: '核对建模必需资料', read_skill: '查阅专业规范', edit_scene: '建立 / 修改 Blender 场景', render_scene: '准备渲染', get_job: '检查任务进度', view_image: '检查预览画面', save_notes: '记录项目选择', read_file: '读取资料', publish_asset: '发布主资产', select_revision: '切换版本' };
   $('#activity').textContent = `◌ ${activity ? (toolNames[activity.label] || activity.label) : '正在理解需求…'}`;
   const sig = JSON.stringify(p.messages);
   if (sig !== messagesSignature) {
@@ -139,7 +139,7 @@ on('#import-form', 'submit', async e => { e.preventDefault(); await api(projectR
 on('#chat-form', 'submit', async e => { e.preventDefault(); const message = $('#message-input').value.trim(); if (!message) return; await api(projectRoute('/chat'), { message, imageIds: [...state.selectedInputs], model: state.model }); $('#message-input').value = ''; state.selectedInputs.clear(); await refresh(); $('#messages').scrollTop = $('#messages').scrollHeight; });
 on('#message-input', 'keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); $('#chat-form').requestSubmit(); } });
 on('#stop-agent', 'click', async () => { await api(projectRoute('/stop'), {}); toast('正在停止本轮和它启动的任务…'); });
-on('#brief-button', 'click', () => { $('#brief-edit').value = state.project.brief; $('#notes-edit').value = state.project.notes; $('#project-directory').textContent = state.project.directory; $('#brief-dialog').showModal(); });
+on('#brief-button', 'click', () => { $('#brief-edit').value = state.project.brief; $('#notes-edit').value = state.project.notes; $('#project-directory').textContent = state.project.directory; const missing = state.project.intakeStatus?.missing || []; $('#intake-questions').innerHTML = missing.length ? `<strong>新产品开工前还需确认：</strong><br>${missing.map((item, index) => `${index + 1}. ${escape(item.question)}`).join('<br>')}` : '新产品资料检查已完成。'; $('#brief-dialog').showModal(); });
 on('#brief-form', 'submit', async e => { e.preventDefault(); await api(projectRoute(), { brief: $('#brief-edit').value, notes: $('#notes-edit').value }, 'PATCH'); $('#brief-dialog').close(); await refresh(); toast('档案已保存'); });
 on('#version-list', 'click', async e => { const select = e.target.closest('[data-select]'), approve = e.target.closest('[data-approve]'), open = e.target.closest('[data-open]'); if (select || approve) { await api(projectRoute('/select'), { revisionId: (select || approve).dataset[select ? 'select' : 'approve'], approve: Boolean(approve) }); await refresh(); toast(approve ? '已设为确认版本' : '已切换工作版本'); } if (open) { await api(projectRoute('/open'), { revisionId: open.dataset.open }); toast('已请求 Blender 打开此版本'); } });
 on('#job-list', 'click', async e => { const button = e.target.closest('[data-cancel-job]'); if (button) { await api(projectRoute(`/jobs/${button.dataset.cancelJob}/cancel`), {}); await refresh(); } });

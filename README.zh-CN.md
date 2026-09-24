@@ -28,6 +28,6 @@ claude mcp add --transport stdio product-studio -- node /ABSOLUTE/PATH/blender-p
 
 其他 AI harness 只要支持**本地 stdio MCP**，配置 `node` 为命令、`dist/mcp-external.js` 的绝对路径为参数即可。Studio 服务和 MCP 客户端需在同一台机器。若改了端口或数据目录，给两边相同的 `STUDIO_URL` / `STUDIO_DATA_DIR`。
 
-工作顺序：项目选择 → 阅读技能 → `import_local_input` 导入用户提供的实拍或贴图（已有 `.blend` 用 `import_blend_path`）→ `view_image` 查看参考 → `edit_scene` → `get_job` 等实际完成 → `render_scene` → `get_job` → `view_image` 检查。每次修改另存版本；只有明确接受时才把版本标为“已确认”。模型主资产可发布给链接场景复用，旧成片不会自动改动。
+工作顺序：项目选择 → 阅读技能 → `import_local_input` 导入用户提供的实拍或贴图（已有 `.blend` 用 `import_blend_path`）→ `view_image` 查看参考 → `record_intake` 记录可核实的事实 → 把剩余必需问题一次问清并等待答复 → `edit_scene` → `get_job` 等实际完成 → `render_scene` → `get_job` → `view_image` 检查。新产品未完成尺寸、材质、结构、视角、贴图对应和交付目标的确认时，建模工具会拒绝执行；用户可以明确授权按照片推估，但 Agent 不能自行假装已经得到授权。每次修改另存版本；只有明确接受时才把版本标为“已确认”。
 
 更多功能、安全边界和开发命令见 [English README](README.md) 与 [安全说明](SECURITY.md)。许可证为 [GPL-3.0](LICENSE)。本仓库只包含通用示例，不包含任何客户产品资料。

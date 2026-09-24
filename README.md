@@ -6,7 +6,7 @@ A local, editable Blender product modeling and advertising photography workspace
 
 ## What it does
 
-- Keeps supplied photos, dimensions, SVGs, and references with the project.
+- Keeps supplied photos, dimensions, SVGs, and references with the project. New product modeling has a required intake gate: missing scale, material, construction, view coverage, artwork mapping, and delivery choices must be resolved first.
 - Makes a new `.blend` revision for every edit; records working and approved versions separately.
 - Queues Blender work, keeps logs, and renders real PNGs from a frozen scene snapshot.
 - Provides project, image inspection, editing, render, and asset publishing tools over MCP.
@@ -57,9 +57,10 @@ Use the host's own MCP configuration format. Run the studio server first. The cl
 
 1. `list_projects` → `select_project` or `create_project` → `get_project`.
 2. `read_skill({"path":"SKILL.md"})` and the relevant reference guide. Use `import_local_input` for explicitly supplied photo/SVG paths, then `view_image` on their project previews. Use `import_blend_path` for an existing `.blend`.
-3. `edit_scene` with Blender Python. It returns a **job ID**. Call `get_job` until completed.
-4. `render_scene` from the exact revision ID, then `get_job`, then `view_image` on the returned preview path.
-5. Use `select_revision` for rollback; use `publish_asset` when the reusable model should be updated for linked scenes. Long-running jobs can be stopped with `cancel_job`.
+3. For a new product, use `record_intake` for evidenced facts. `get_project` shows mandatory missing questions. Ask the user and wait for answers or explicit permission to estimate **before** modeling; a new product `edit_scene` call is blocked until intake is complete.
+4. `edit_scene` with Blender Python. It returns a **job ID**. Call `get_job` until completed.
+5. `render_scene` from the exact revision ID, then `get_job`, then `view_image` on the returned preview path.
+6. Use `select_revision` for rollback; use `publish_asset` when the reusable model should be updated for linked scenes. Long-running jobs can be stopped with `cancel_job`.
 
 The MCP adapter selects one active project **per client connection**. Set `STUDIO_PROJECT_ID` in the adapter environment to preselect a known project; otherwise use the project tools. If the studio uses a custom data directory or port, pass the same `STUDIO_DATA_DIR` and `STUDIO_URL=http://127.0.0.1:PORT` to the adapter. Its local connection secret is generated in the data directory; do not copy it into public configuration files.
 
@@ -86,4 +87,4 @@ npm run smoke
 
 ## License
 
-GPL-3.0-only. The bundled skill has its own copy of the same license. User projects and uploaded product assets are stored outside the source tree and are not included in this repository.
+GPL-3.0-only. The bundled skill has its own copy of the same license. User projects and uploaded product assets stay in the ignored local `.studio/` data directory (or `STUDIO_DATA_DIR`) and are not included in this repository.
