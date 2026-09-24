@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.studio/
+server.lock
+connector-secret
+.env
+.DS_Store
+__pycache__/
+*.pyc
+releases/
+test-results/
+*.log

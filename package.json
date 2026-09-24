@@ -1,0 +1,35 @@
+{
+  "name": "blender-product-studio-agent",
+  "version": "0.1.0",
+  "description": "A model-neutral local Blender product modeling and photography studio with an MCP interface.",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "check": "tsc --noEmit",
+    "test": "npm run build && tsx --test tests/*.test.ts",
+    "smoke": "tsx scripts/smoke.ts",
+    "mcp": "node dist/mcp-external.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.1",
+    "@openai/codex-sdk": "0.156.1",
+    "express": "5.2.1",
+    "multer": "2.4.0",
+    "sharp": "0.35.4",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/multer": "2.2.0",
+    "@types/node": "26.6.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}

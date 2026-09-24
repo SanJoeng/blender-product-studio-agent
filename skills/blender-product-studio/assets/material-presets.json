@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "Illustrative starting points; not measured or product-calibrated materials.",
+  "units": "Lengths in meters, absorption density per meter, input hex colors in sRGB.",
+  "presets": {
+    "plastic_matte": {"label": "01 MATTE PLASTIC", "family": "dielectric", "base_srgb": "647d71", "roughness": 0.42, "metallic": 0, "ior": 1.46, "micro_pitch_m": 0.00035, "micro_height_m": 0.000003, "roughness_variation": 0.025},
+    "plastic_gloss": {"label": "02 GLOSS PLASTIC", "family": "dielectric", "base_srgb": "647d71", "roughness": 0.16, "metallic": 0, "ior": 1.46},
+    "plastic_soft_touch": {"label": "03 SOFT TOUCH", "family": "dielectric", "base_srgb": "505b62", "roughness": 0.62, "metallic": 0, "ior": 1.46, "micro_pitch_m": 0.00025, "micro_height_m": 0.000002, "roughness_variation": 0.025},
+    "plastic_translucent": {"label": "04 TRANSLUCENT", "family": "dielectric", "base_srgb": "e0e7dd", "roughness": 0.24, "metallic": 0, "ior": 1.46, "transmission": 0.12, "subsurface": 0.35, "subsurface_scale_m": 0.001},
+    "metal_polished": {"label": "05 POLISHED METAL", "family": "conductor", "base_srgb": "d9dee2", "roughness": 0.10, "metallic": 1},
+    "metal_brushed": {"label": "06 BRUSHED METAL", "family": "conductor", "base_srgb": "d9dee2", "roughness": 0.29, "metallic": 1, "anisotropy": 0.65, "micro_pitch_m": 0.00025, "micro_height_m": 0.0000015, "coordinate_stretch": [0.025, 0.025, 1.0], "roughness_variation": 0.035},
+    "metal_painted": {"label": "07 OPAQUE PAINT", "family": "opaque_paint_over_metal", "base_srgb": "334e5c", "roughness": 0.27, "metallic": 0, "ior": 1.5, "coat": 1, "coat_roughness": 0.19},
+    "glass_clear": {"label": "08 CLEAR GLASS", "family": "glass", "base_srgb": "ffffff", "roughness": 0.055, "metallic": 0, "ior": 1.50, "transmission": 1},
+    "glass_amber": {"label": "09 AMBER GLASS", "family": "glass", "base_srgb": "ffffff", "roughness": 0.055, "metallic": 0, "ior": 1.50, "transmission": 1, "absorption_srgb": "efaa33", "absorption_density_per_m": 400},
+    "paper_uncoated": {"label": "10 UNCOATED PAPER", "family": "paper", "base_srgb": "ded2b9", "roughness": 0.70, "metallic": 0, "ior": 1.46, "micro_pitch_m": 0.00045, "micro_height_m": 0.000005, "roughness_variation": 0.04},
+    "paper_laminated": {"label": "11 LAMINATED PAPER", "family": "paper", "base_srgb": "ded2b9", "roughness": 0.48, "metallic": 0, "ior": 1.46, "coat": 1, "coat_roughness": 0.15, "micro_pitch_m": 0.00045, "micro_height_m": 0.000002, "roughness_variation": 0.015},
+    "foil_gold": {"label": "12 FOIL STARTER", "family": "conductor", "base_srgb": "e9c477", "roughness": 0.26, "metallic": 1, "micro_pitch_m": 0.00040, "micro_height_m": 0.000001, "roughness_variation": 0.025}
+  }
+}

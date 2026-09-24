@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "project_name": "",
+  "conventions": {
+    "geometry_unit": "m",
+    "display_unit": "mm",
+    "up_axis": "+Z",
+    "product_front_axis": "-Y"
+  },
+  "sources": [],
+  "capture_sets": [],
+  "products": [],
+  "material_checks": [],
+  "props": [],
+  "scenes": [],
+  "shot_briefs": [],
+  "current": {
+    "working_scene": null,
+    "working_revision": null,
+    "accepted_scene": null,
+    "accepted_revision": null,
+    "accepted_preview": null
+  },
+  "renders": [],
+  "open_questions": []
+}

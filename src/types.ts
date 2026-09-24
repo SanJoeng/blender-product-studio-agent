@@ -1,0 +1,9 @@
+export type InputFile = { id: string; name: string; path: string; preview?: string; role: 'photo' | 'texture' | 'reference' | 'document'; size: number; createdAt: string; warning?: string };
+export type Revision = { id: string; label: string; kind: 'model' | 'scene'; parentId: string | null; path: string; report: string; code?: string; createdAt: string; sha256: string };
+export type Render = { id: string; revisionId: string; path: string; preview: string; record: string; snapshot: string; width: number; height: number; stage: 'preview' | 'final'; transparent: boolean; createdAt: string; device?: string; hasTransparentPixels?: boolean };
+export type PublishedAsset = { id: string; name: string; path: string; revisionId: string; collections: string[]; history: string[]; updatedAt: string };
+export type Job = { id: string; projectId: string; runId?: string; kind: 'edit' | 'render' | 'publish' | 'import'; label: string; status: 'queued' | 'running' | 'completed' | 'failed' | 'cancelled'; createdAt: string; startedAt?: string; endedAt?: string; log: string[]; result?: unknown; error?: string };
+export type Message = { id: string; role: 'user' | 'assistant' | 'system'; text: string; createdAt: string };
+export type Activity = { id: string; label: string; status: string; createdAt: string };
+export type Project = { id: string; name: string; brief: string; notes: string; createdAt: string; updatedAt: string; workingRevisionId: string | null; approvedRevisionId: string | null; threadId: string | null; inputs: InputFile[]; revisions: Revision[]; renders: Render[]; assets: PublishedAsset[]; jobs: Job[]; messages: Message[]; activities: Activity[]; agentStatus: 'idle' | 'running' | 'failed' | 'cancelled'; agentError?: string; usage?: unknown };
+export const now = () => new Date().toISOString();

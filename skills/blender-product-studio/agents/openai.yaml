@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blender 产品建模与广告摄影"
+  short_description: "从实拍建立产品主资产，校准塑料金属等材质，设计反射布光并交付广告成片"
+  default_prompt: "使用 $blender-product-studio，根据实拍、尺寸和设计文件制作可复用产品模型，匹配表面工艺，并完成广告摄影机位、灯光预览与成片。"

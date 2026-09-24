@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Product Studio · 产品摄影 Agent</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Product Studio 首页"><span class="brand-mark">P<span>●</span></span><span>PRODUCT<br><b>STUDIO</b></span></a>
+    <p class="sidebar-caption">把产品带进摄影棚。</p>
+    <button id="new-project" class="button new-project">＋ 新建项目</button>
+    <div class="sidebar-section">我的项目 <span id="project-count">0</span></div>
+    <nav id="projects" aria-label="项目列表"></nav>
+    <div class="sidebar-bottom"><span class="local-dot"></span> 本地工作室 <span class="version">v0.1</span><button id="settings-button" class="text-button">运行设置 ↗</button></div>
+  </aside>
+  <main>
+    <header class="topbar"><div><p class="eyebrow">BLENDER PRODUCT AGENT</p><h1 id="project-title">你的产品，你的摄影棚</h1></div><div class="top-actions"><span id="environment-badge" class="pill">检查运行环境…</span><button id="brief-button" class="button subtle" disabled>产品档案</button></div></header>
+    <div class="workspace">
+      <section class="work-area">
+        <div class="work-nav"><div class="tabs" role="tablist"><button class="tab active" data-tab="preview" role="tab">预览</button><button class="tab" data-tab="inputs" role="tab">资料</button><button class="tab" data-tab="versions" role="tab">版本</button><button class="tab" data-tab="jobs" role="tab">任务 <i id="job-dot"></i></button></div><button id="render-button" class="button dark" disabled>渲染输出 ↗</button></div>
+        <section id="panel-preview" class="panel active">
+          <div id="viewer" class="viewer">
+            <div id="empty-preview" class="empty-preview">
+              <div class="line-art" aria-hidden="true"><svg viewBox="0 0 220 160" fill="none"><path d="M25 33 111 22 141 40V136L57 146 25 129Z"/><path d="m25 33 32 19 84-12M57 52v94"/><path d="M146 57h32v14c0 6 8 9 8 15v54c0 8-48 8-48 0V86c0-6 8-9 8-15Z"/><path d="M145 47h34v11h-34ZM139 94h46M139 127h46"/><path class="shine" d="m184 22 4 9 10 4-10 3-4 10-3-10-10-3 10-4Z"/></svg></div>
+              <p class="eyebrow">FROM OBJECT TO IMAGE</p><h2>从一件产品开始</h2><p>带上实拍、尺寸和贴图，<br>与 Agent 一起建立模型，找到合适的光。</p><div class="empty-actions"><button id="start-project" class="button dark">创建第一个项目</button><button id="demo-button" class="button subtle">试跑瓶盒示例</button></div><small>示例由 Blender 实际建模和渲染</small>
+            </div>
+            <img id="preview-image" alt="所选渲染预览" hidden>
+            <div id="image-tools" class="image-tools" hidden><button data-bg="checker" title="透明棋盘格" class="swatch checker"></button><button data-bg="white" title="白底" class="swatch white"></button><button data-bg="dark" title="深色底" class="swatch dark"></button><a id="download-image" class="button small" href="#" download>下载原图 ↓</a></div>
+          </div>
+          <div class="preview-caption"><div><strong id="preview-label">尚未生成预览</strong><span id="preview-meta">模型与每张成片都保留版本记录</span></div><span id="agent-state" class="pill">待开始</span></div>
+          <div id="filmstrip" class="filmstrip"></div>
+        </section>
+        <section id="panel-inputs" class="panel">
+          <div class="section-heading"><div><h2>产品资料</h2><p>原文件保存在项目里。点击图片，附给下一条对话。</p></div><select id="input-role" aria-label="资料用途"><option value="photo">产品实拍</option><option value="texture">贴图 / 刀模</option><option value="reference">摄影参考</option><option value="document">尺寸 / 说明</option></select></div>
+          <label id="drop-zone" class="drop-zone"><input id="file-input" type="file" multiple><span>＋ 添加照片、贴图或说明</span><small>可拖入文件 · 每个最多 64MB · HEIC 原片会保留</small></label>
+          <div id="input-list" class="input-grid"></div>
+          <form id="import-form" class="import-form"><label for="blend-path">已有 Blender 场景</label><div><input id="blend-path" placeholder="粘贴本机 .blend 文件的完整路径"><button class="button subtle">导入副本</button></div><small>从原路径读取依赖，另存到本项目。上传 .blend 时建议先打包贴图。</small></form>
+        </section>
+        <section id="panel-versions" class="panel"><div class="section-heading"><div><h2>模型与场景版本</h2><p>每次修改另存一版；工作版与已确认版分别记录。</p></div></div><div id="version-list"></div><div id="asset-list"></div></section>
+        <section id="panel-jobs" class="panel"><div class="section-heading"><div><h2>执行与渲染任务</h2><p>Blender 顺序执行。进度来自实际日志。</p></div></div><div id="job-list"></div></section>
+      </section>
+      <aside class="conversation">
+        <div class="conversation-heading"><div class="avatar">p.</div><div><strong>摄影搭档</strong><span>Product Studio Agent</span></div><span id="chat-status" class="chat-status">就绪</span></div>
+        <div id="messages" class="messages"><div class="welcome-message"><span class="eyebrow">LET'S MAKE IT REAL</span><h3>你想怎样呈现这件产品？</h3><p>可以先描述尺寸、材质和开合方式，也可以直接上传资料。已有场景可以导入后继续调整。</p><div class="suggestions"><button data-prompt="根据我上传的实拍、尺寸和贴图建立可编辑的产品主模型，先给我小预览。">按实拍建立产品模型 ↗</button><button data-prompt="用当前产品给我三个不同机位的小预览，保持灯光一致，方便我选择。">比较几个摄影机位 ↗</button><button data-prompt="保持当前构图，把灯光调得平柔一些，处理成透明背景，先渲染小预览。">调整灯光与透明背景 ↗</button></div></div></div>
+        <div id="activity" class="activity" hidden></div>
+        <div id="chat-error" class="chat-error" hidden></div>
+        <form id="chat-form" class="composer"><div id="attachments" class="attachments"></div><textarea id="message-input" rows="3" placeholder="例如：玻璃瓶高 10cm，直径 2.6cm；先看正面平柔光的效果…" aria-label="给 Agent 的需求"></textarea><div class="composer-footer"><span>⌘ / Ctrl + Enter 发送</span><button id="stop-agent" type="button" class="button subtle small" hidden>停止</button><button id="send-message" class="button dark small">发送 ↑</button></div></form>
+        <p class="chat-footnote">内置聊天使用 Codex · Claude Code 等可通过 MCP 接入</p>
+      </aside>
+    </div>
+  </main>
+  <dialog id="project-dialog"><form id="project-form"><div class="dialog-heading"><h2>新建产品项目</h2><button type="button" data-close class="close-button">×</button></div><label>项目名称<input id="project-name" required maxlength="100" placeholder="例如：玻璃瓶与礼盒摄影"></label><label>产品信息<textarea id="project-brief" rows="5" placeholder="尺寸及单位、材质、贴图说明、参考方向…可以之后补充。"></textarea></label><button class="button dark">创建项目</button></form></dialog>
+  <dialog id="brief-dialog"><form id="brief-form"><div class="dialog-heading"><h2>产品档案</h2><button type="button" data-close class="close-button">×</button></div><label>资料与需求<textarea id="brief-edit" rows="6"></textarea></label><label>项目记忆与已确认选择<textarea id="notes-edit" rows="7"></textarea></label><small id="project-directory"></small><button class="button dark">保存档案</button></form></dialog>
+  <dialog id="render-dialog"><form id="render-form"><div class="dialog-heading"><h2>渲染输出</h2><button type="button" data-close class="close-button">×</button></div><p id="render-source" class="muted"></p><div class="form-row"><label>用途<select id="render-stage"><option value="preview">小预览</option><option value="final">正式图</option></select></label><label>尺寸方式<select id="size-mode"><option value="edge">按长边</option><option value="exact">指定宽高</option></select></label></div><div id="edge-field"><label>长边像素<input id="render-edge" type="number" value="1000" min="64" max="12000"></label></div><div id="exact-fields" class="form-row" hidden><label>宽<input id="render-width" type="number" value="1000" min="64" max="12000"></label><label>高<input id="render-height" type="number" value="1000" min="64" max="12000"></label></div><div class="form-row"><label>背景<select id="render-alpha"><option value="keep">沿用场景</option><option value="transparent">透明 Film</option><option value="opaque">不透明</option></select></label><label>设备<select id="render-device"><option value="auto">自动选择 GPU</option><option value="gpu">仅 GPU</option><option value="cpu">CPU</option></select></label></div><small>透明 Film 不会自动移除桌面。需要去掉布景时，请先让 Agent 调整场景并检查预览。</small><button class="button dark">加入渲染队列</button></form></dialog>
+  <dialog id="settings-dialog"><div class="dialog-heading"><h2>运行设置</h2><button type="button" data-close class="close-button">×</button></div><div id="environment-detail"></div><label>内置聊天模型<input id="model-name" placeholder="留空，沿用 Codex 的默认模型"></label><p class="muted">内置聊天使用本机 Codex 登录。其它 AI 可连接独立 MCP 入口；接入说明见项目 README。</p><button id="save-settings" class="button dark">保存设置</button></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="module" src="/app.js"></script>
+</body></html>
